@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Panel</title>
+</head>
+<body>
+
+<h2>Generate new feedback link</h2>
+
+<form method="POST" action="/admin">
+    Company name:<br>
+    <input type="text" name="company_name" required><br>
+
+    Employer ID:<br>
+    <input type="text" name="employer_id" required><br><br>
+
+    <button type="submit">Generate link</button>
+</form>
+
+<hr>
+
+<h2>Collected Feedback</h2>
+
+<table border="1" cellpadding="5">
+    <tr>
+        <th>Time</th>
+        <th>Company</th>
+        <th>Employer ID</th>
+        <th>Reason</th>
+        <th>Comment</th>
+    </tr>
+
+    {% for row in rows %}
+    <tr>
+        <td>{{ row[0] }}</td>
+        <td>{{ row[1] }}</td>
+        <td>{{ row[2] }}</td>
+        <td>{{ row[3] }}</td>
+        <td>{{ row[4] }}</td>
+    </tr>
+    {% endfor %}
+
+</table>
+
+</body>
+</html>

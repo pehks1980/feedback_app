@@ -1,0 +1,16 @@
+<form method="POST" action="/submit">
+    <input type="hidden" name="req_id" value="{{ req_id }}">
+
+    <p>Why was I not selected?</p>
+
+    <input type="radio" name="reason" value="experience"> Not enough experience<br>
+    <input type="radio" name="reason" value="better_candidate"> Better candidate<br>
+    <input type="radio" name="reason" value="salary"> Salary mismatch<br>
+    <input type="radio" name="reason" value="stack"> Tech stack mismatch<br>
+    <input type="radio" name="reason" value="other"> Other<br>
+
+    <br>
+    <textarea name="comment" placeholder="Optional feedback"></textarea><br><br>
+
+    <button type="submit">Submit</button>
+</form>
