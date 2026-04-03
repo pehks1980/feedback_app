@@ -17,4 +17,4 @@ RUN pip install gunicorn
 EXPOSE 8000
 
 # Run Flask app with Gunicorn
-CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:8000", "app:app"]
+CMD ["gunicorn", "-w", "3", "-b", "0.0.0.0:8000", "--timeout", "30", "--limit-request-line", "4094", "app:app"]

@@ -4,7 +4,17 @@ import sqlite3
 import uuid
 import os
 
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
+
 app = Flask(__name__)
+
+limiter = Limiter(
+    key_func=get_remote_address,
+    default_limits=["200 per day", "50 per hour"]
+)
+
+limiter.init_app(app)
 
 # Configuration from environment variables
 DOMAIN = os.getenv("DOMAIN", "127.0.0.1:8080")
@@ -70,6 +80,7 @@ def init_db():
 
 
 @app.route('/admin', methods=['POST'])
+@limiter.limit("10 per minute")
 def admin():
     if request.method == 'POST':
         employer_id = request.form['employer_id']
@@ -93,6 +104,7 @@ def admin():
 
 
 @app.route('/feedback/<req_id>')
+@limiter.limit("60 per minute")
 def landing(req_id):
     conn = sqlite3.connect(DB_PATH)
     c = conn.cursor()
@@ -136,11 +148,13 @@ def landing(req_id):
 
 
 @app.route('/form/<req_id>')
+@limiter.limit("10 per minute")
 def form(req_id):
     return render_template('form.html', req_id=req_id)
 
 
 @app.route('/submit', methods=['POST'])
+@limiter.limit("10 per minute")
 def submit():
     req_id = request.form.get('req_id')
     reason = request.form.get('reason')
@@ -173,6 +187,7 @@ def submit():
     return render_template('success.html')
 
 @app.route('/debug/env')
+@limiter.limit("10 per minute")
 def debug_env():
     return {
         'DOMAIN': DOMAIN,
