@@ -1,0 +1,15 @@
+# docker exec -it 151 cat data/db_admin_link -check link
+services:
+  web:
+    build: ./feedback_app
+    ports:
+      - "8080:8000"
+    volumes:
+      - app_data:/app/data
+    environment:
+      - DOMAIN=127.0.0.1:8080
+      - FLASK_DEBUG=false
+    restart: unless-stopped
+
+volumes:
+  app_data:
