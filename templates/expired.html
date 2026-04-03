@@ -3,18 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Greetings</title>
+    <title>Link expired</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
 
-<h2>Hello dear team from {{ company_name }}</h2>
-<p>I'd really appreciate your feedback 🙏</p>
-<p>Expires at: {{ expires_at }}</p>
-
-<a href="/form/{{ req_id }}">
-    <button>Start feedback</button>
-</a>
+<h2>This feedback link has expired ⏳</h2>
+<p>Thank you anyway — I appreciate your time!</p>
 
 </body>
 </html>

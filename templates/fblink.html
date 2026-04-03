@@ -3,18 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Greetings</title>
+    <title>Feedback Link Generated!</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
+
 <body>
 
-<h2>Hello dear team from {{ company_name }}</h2>
-<p>I'd really appreciate your feedback 🙏</p>
-<p>Expires at: {{ expires_at }}</p>
-
-<a href="/form/{{ req_id }}">
-    <button>Start feedback</button>
-</a>
+<h2>Thank you! 🎉</h2>
+<div class="generated-link">
+    Generated link:<br>
+    <a href="{{ link }}">{{ link }}</a>
+</div>
+<p>Your feedback is here</p>
 
 </body>
+
 </html>

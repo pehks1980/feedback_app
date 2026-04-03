@@ -1,16 +1,32 @@
-<form method="POST" action="/submit">
-    <input type="hidden" name="req_id" value="{{ req_id }}">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Form</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
 
-    <p>Why was I not selected?</p>
+<div class="form-card">
+    <h2>Why was I not selected?</h2>
 
-    <input type="radio" name="reason" value="experience"> Not enough experience<br>
-    <input type="radio" name="reason" value="better_candidate"> Better candidate<br>
-    <input type="radio" name="reason" value="salary"> Salary mismatch<br>
-    <input type="radio" name="reason" value="stack"> Tech stack mismatch<br>
-    <input type="radio" name="reason" value="other"> Other<br>
+    <form method="POST" action="/submit">
+        <input type="hidden" name="req_id" value="{{ req_id }}">
 
-    <br>
-    <textarea name="comment" placeholder="Optional feedback"></textarea><br><br>
+        <div class="radio-group">
+            <label><input type="radio" name="reason" value="experience" required> Not enough experience</label>
+            <label><input type="radio" name="reason" value="better_candidate"> Better candidate</label>
+            <label><input type="radio" name="reason" value="salary"> Salary mismatch</label>
+            <label><input type="radio" name="reason" value="stack"> Tech stack mismatch</label>
+            <label><input type="radio" name="reason" value="other"> Other</label>
+        </div>
 
-    <button type="submit">Submit</button>
-</form>
+        <textarea name="comment" maxlength="1000" placeholder="Optional feedback"></textarea>
+
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+</body>
+</html>
