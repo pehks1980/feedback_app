@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Форма обратной связи</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+
+<div class="form-card">
+    <h2>Почему я не прошёл отбор? 🙏</h2>
+
+    <form method="POST" action="/submit">
+        <input type="hidden" name="req_id" value="{{ req_id }}">
+
+        <div class="radio-group">
+            <label><input type="radio" name="reason" value="experience" required> Не хватило опыта</label>
+            <label><input type="radio" name="reason" value="better_candidate"> Нашёлся кандидат сильнее</label>
+            <label><input type="radio" name="reason" value="salary"> Не сошлись по зарплате</label>
+            <label><input type="radio" name="reason" value="stack"> Не подошёл технологический стек</label>
+            <label><input type="radio" name="reason" value="other"> Другая причина</label>
+        </div>
+
+        <textarea name="comment" maxlength="1000" placeholder="Если хотите, напишите подробнее — мне будет очень полезно 🙂"></textarea>
+
+        <button type="submit">Отправить</button>
+    </form>
+</div>
+
+</body>
+</html>

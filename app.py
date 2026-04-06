@@ -24,7 +24,8 @@ EXPIRE_DAYS = 14
 # Database path in the data directory
 DB_PATH ='./data/feedback.db'
 ADMIN_LINK_PATH = './data/db_admin_link'
-
+#language
+RU='ru' #'' for default
 
 def init_db():
     """Initialize database and create admin user if needed"""
@@ -98,9 +99,9 @@ def admin():
 
         link = f"http://{DOMAIN}/feedback/{req_id}"
         print(link)
-        return render_template("fblink.html", link=link)
+        return render_template(f"{RU}fblink.html", link=link)
 
-    return render_template('success.html')
+    return render_template(f'{RU}success.html')
 
 
 @app.route('/feedback/<req_id>')
@@ -129,7 +130,7 @@ def landing(req_id):
 
         if datetime.now(timezone.utc) > expires_at_dt:
             conn.close()
-            return render_template("expired.html")
+            return render_template(f"{RU}expired.html")
 
     # Admin view
     if role == "admin":
@@ -144,13 +145,13 @@ def landing(req_id):
         return render_template('admin.html', rows=rows)
 
     conn.close()
-    return render_template('landing.html', req_id=req_id, company_name=company_name, expires_at=expires_pretty)
+    return render_template(f'{RU}landing.html', req_id=req_id, company_name=company_name, expires_at=expires_pretty)
 
 
 @app.route('/form/<req_id>')
 @limiter.limit("10 per minute")
 def form(req_id):
-    return render_template('form.html', req_id=req_id)
+    return render_template(f'{RU}form.html', req_id=req_id)
 
 
 @app.route('/submit', methods=['POST'])
@@ -184,14 +185,15 @@ def submit():
     conn.commit()
     conn.close()
 
-    return render_template('success.html')
+    return render_template(f'{RU}success.html')
 
 @app.route('/debug/env')
 @limiter.limit("10 per minute")
 def debug_env():
     return {
         'DOMAIN': DOMAIN,
-        'FLASK_DEBUG': FLASK_DEBUG
+        'FLASK_DEBUG': FLASK_DEBUG,
+        'RU': RU
     }
 
 if os.path.exists(ADMIN_LINK_PATH):

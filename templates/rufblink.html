@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ссылка для обратной связи создана!</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+
+<h2>Спасибо! 🎉</h2>
+
+<div class="request-text">
+    <p>🙏 Уважаемый рекрутер / руководитель!</p>
+    <p>Если по какой-то причине я не подошёл на эту позицию, пожалуйста, уделите <strong>одну минутку</strong> — перейдите по ссылке и оставьте короткий фидбек.</p>
+    <div class="generated-link">
+    Созданная ссылка:<br>
+    <a href="{{ link }}">{{ link }}</a>
+    </div>
+    <p>Ваш отзыв будет <strong>очень ценен лично для меня</strong> — он поможет мне понять, в каком направлении развиваться и становиться сильнее как специалист.</p>
+    <p>Заранее большое спасибо за ваше время и честность! 🙌</p>
+</div>
+
+<div class="privacy-note">
+    <p>🔒 <strong>О конфиденциальности:</strong></p>
+    <p>✓ Данные отзыва хранятся на моём <strong>частном VPS-сервере</strong></p>
+    <p>✓ Информация используется <strong>исключительно для моего личного развития</strong> и нигде больше не публикуется и не передаётся третьим лицам.</p>
+    <p>✓ Исходный код программы полностью открыт — вы можете посмотреть его на моём GitHub:</p>
+    <p>📂 <a href="https://github.com/pehks1980/feedback_app" target="_blank">https://github.com/pehks1980/feedback_app</a></p>
+</div>
+
+</body>
+
+</html>
