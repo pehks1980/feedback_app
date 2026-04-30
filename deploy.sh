@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
 set -euo pipefail
+set +x
 
 APP_SERVICE="web"
+APPDIR="feedback_app"
 DB_PATH="/app/data/feedback.db"
 BACKUP_DIR="./backups"
 TIMESTAMP="$(date +%Y%m%d_%H%M%S)"
@@ -11,7 +13,7 @@ BACKUP_PATH="${BACKUP_DIR}/feedback_${TIMESTAMP}.db"
 mkdir -p "${BACKUP_DIR}"
 
 echo "Checking running container..."
-CONTAINER_ID="$(docker compose ps -q "${APP_SERVICE}" || true)"
+CONTAINER_ID="$(docker compose ps -q "${APP_SERVICE}")"
 
 if [ -n "${CONTAINER_ID}" ]; then
     echo "Creating SQLite backup at ${BACKUP_PATH}"
@@ -25,7 +27,9 @@ else
 fi
 
 echo "Pulling latest code..."
+cd ./${APPDIR}
 git pull --ff-only
+cd ..
 
 echo "Rebuilding and restarting containers..."
 docker compose up -d --build
