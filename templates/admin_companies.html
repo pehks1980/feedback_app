@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Links</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+
+<h2>All Company Links</h2>
+
+<p>
+    <a href="{{ url_for('landing', req_id=admin_req_id) }}">Back to admin panel</a>
+</p>
+
+<table border="1" cellpadding="5">
+    <tr>
+        <th>Company</th>
+        <th>Employer ID</th>
+        <th>Feedback Link</th>
+        <th>Expires At</th>
+    </tr>
+
+    {% for company in companies %}
+    <tr>
+        <td>{{ company.company_name }}</td>
+        <td>{{ company.employer_id }}</td>
+        <td><a href="{{ company.link }}" target="_blank" rel="noopener noreferrer">{{ company.link }}</a></td>
+        <td>{{ company.expires_at or "No expiration" }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+</body>
+</html>

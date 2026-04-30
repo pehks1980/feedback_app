@@ -20,6 +20,10 @@
     <button type="submit">Generate link</button>
 </form>
 
+<form method="GET" action="{{ url_for('admin_companies', admin_req_id=admin_req_id) }}">
+    <button type="submit">View all company links</button>
+</form>
+
 <hr>
 
 <h2>Collected Feedback</h2>

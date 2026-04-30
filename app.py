@@ -142,10 +142,49 @@ def landing(req_id):
         ''')
         rows = c.fetchall()
         conn.close()
-        return render_template('admin.html', rows=rows)
+        return render_template('admin.html', rows=rows, admin_req_id=req_id)
 
     conn.close()
     return render_template(f'{RU}landing.html', req_id=req_id, company_name=company_name, expires_at=expires_pretty)
+
+
+@app.route('/admin/companies/<admin_req_id>')
+@limiter.limit("30 per minute")
+def admin_companies(admin_req_id):
+    conn = sqlite3.connect(DB_PATH)
+    c = conn.cursor()
+
+    c.execute("SELECT role FROM requests WHERE id=?", (admin_req_id,))
+    admin_row = c.fetchone()
+
+    if not admin_row or admin_row[0] != "admin":
+        conn.close()
+        return "Invalid admin link", 403
+
+    c.execute('''
+        SELECT company_name, employer_id, id, expires_at
+        FROM requests
+        WHERE role = 'user'
+        ORDER BY company_name COLLATE NOCASE ASC, employer_id COLLATE NOCASE ASC
+    ''')
+    company_rows = c.fetchall()
+    conn.close()
+
+    companies = [
+        {
+            "company_name": row[0],
+            "employer_id": row[1],
+            "link": f"http://{DOMAIN}/feedback/{row[2]}",
+            "expires_at": row[3],
+        }
+        for row in company_rows
+    ]
+
+    return render_template(
+        'admin_companies.html',
+        companies=companies,
+        admin_req_id=admin_req_id,
+    )
 
 
 @app.route('/form/<req_id>')
@@ -203,6 +242,5 @@ if not os.path.exists(DB_PATH):
     init_db()
 
 #app.run(host="0.0.0.0", port=5000, debug=FLASK_DEBUG)
-
 
 
