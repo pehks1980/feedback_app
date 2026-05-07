@@ -10,7 +10,7 @@
 
 <h2>Generate new feedback link</h2>
 
-<form method="POST" action="/admin">
+<form method="POST" action="{{ url_for('admin', admin_req_id=admin_req_id) }}">
     Company name:<br>
     <input type="text" name="company_name" required><br>
 

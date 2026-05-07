@@ -80,18 +80,26 @@ def init_db():
     conn.close()
 
 
-@app.route('/admin', methods=['POST'])
+@app.route('/admin/<admin_req_id>', methods=['POST'])
 @limiter.limit("10 per minute")
-def admin():
+def admin(admin_req_id):
     if request.method == 'POST':
         employer_id = request.form['employer_id']
         company_name = request.form['company_name']
 
+        conn = sqlite3.connect(DB_PATH)
+        c = conn.cursor()
+
+        c.execute("SELECT role FROM requests WHERE id=?", (admin_req_id,))
+        admin_row = c.fetchone()
+
+        if not admin_row or admin_row[0] != "admin":
+            conn.close()
+            return "Invalid admin link", 403
+
         req_id = str(uuid.uuid4())
         expires_at = datetime.now(timezone.utc) + timedelta(days=EXPIRE_DAYS)
 
-        conn = sqlite3.connect(DB_PATH)
-        c = conn.cursor()
         c.execute("INSERT INTO requests VALUES (?, ?, ?, ?, ?)",
                   (req_id, employer_id, company_name, "user", expires_at))
         conn.commit()
@@ -242,5 +250,4 @@ if not os.path.exists(DB_PATH):
     init_db()
 
 #app.run(host="0.0.0.0", port=5000, debug=FLASK_DEBUG)
-
 
